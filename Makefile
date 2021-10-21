@@ -7,10 +7,10 @@ main.o: main.c linkedlist.h
 linkedlist.o: linkedlist.c linkedlist.h
 	gcc -c linkedlist.c
 
-run: mytunes
+run:
 	@./mytunes
 
 clean:
-	@rm *.o
-	@rm *~
-	@rm *.exe
+	-rm *.o
+	-rm *~
+	-rm *.exe

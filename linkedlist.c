@@ -37,6 +37,37 @@ struct song_node *find_song(struct song_node *head, char *artist, char *name)
     return head;
 }
 
+int song_cmp(struct song_node *a, struct song_node *b)
+{
+    int artist_cmp = 0;
+    int name_cmp = 0;
+
+    int a_artist_len = strlen(a->artist);
+    int b_artist_len = strlen(b->artist);
+    int a_name_len = strlen(a->name);
+    int b_name_len = strlen(b->name);
+
+    if (a_artist_len != b_artist_len)
+    {
+        int i = 0;
+        while (a->artist[i] == b->artist[i] && a->artist[i] != '\0' && b->artist[i] != '\0')
+            ++i;
+
+        return a->artist[i] - b->artist[i];
+    }
+
+    if (a_name_len != b_name_len)
+    {
+        int i = 0;
+        while (a->name[i] == b->name[i] && a->name[i] != '\0' && b->name[i] != '\0')
+            ++i;
+
+        return a->name[i] - b->name[i]; // stuff
+    }
+
+    return 0;
+}
+
 void print_node(struct song_node *node)
 {
     printf("%s: %s", node->artist, node->name);
