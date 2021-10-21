@@ -13,3 +13,11 @@ struct song_node *make_node(char *artist, char *name)
 
     return node;
 }
+
+struct song_node *insert_front(struct song_node *head, char *artist, char *name)
+{
+    struct song_node *new_head = make_node(artist, name);
+    new_head->next = head;
+
+    return new_head;
+}
