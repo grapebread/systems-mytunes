@@ -22,6 +22,36 @@ struct song_node *insert_front(struct song_node *head, char *artist, char *name)
     return new_head;
 }
 
+struct song_node *insert(struct song_node *head, char *artist, char *name)
+{
+    if (head == NULL)
+    {
+        return insert_front(head, artist, name);
+    }
+
+    struct song_node *node = make_node(artist, name);
+    if (!song_cmp(head, node))
+    {
+        node->next = head;
+        return head;
+    }
+
+    struct song_node *tmp = head;
+    while (tmp)
+    {
+        if (!song_cmp(tmp, node))
+        {
+            node->next = tmp->next->next;
+            tmp->next = node;
+            break;
+        }
+
+        tmp = tmp->next;
+    }
+
+    return head;
+}
+
 struct song_node *find_song(struct song_node *head, char *artist, char *name)
 {
     while (head)
@@ -75,7 +105,7 @@ void print_node(struct song_node *node)
 
 void print_list(struct song_node *head)
 {
-    struct song_node *tmp = tmp;
+    struct song_node *tmp = head;
     while (tmp)
     {
         printf(" ");
