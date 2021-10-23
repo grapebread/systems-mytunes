@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <time.h>
 
 #include "linkedlist.h"
 
@@ -100,7 +102,7 @@ int song_cmp(struct song_node *a, struct song_node *b)
 
 void print_node(struct song_node *node)
 {
-    printf("%s: %s", node->artist, node->name);
+    printf("%s: %s\n", node->artist, node->name);
 }
 
 void print_list(struct song_node *head)
@@ -108,11 +110,73 @@ void print_list(struct song_node *head)
     struct song_node *tmp = head;
     while (tmp)
     {
-        printf(" ");
-        print_node(tmp);
+        printf("%s: %s", tmp->artist, tmp->name);
         printf(" |");
+        printf(" ");
 
         tmp = tmp->next;
     }
     printf("\n");
+}
+
+struct song_node *find_artist_song(struct song_node *head, char *artist){
+	while (head){
+		if (!(strcasecmp((head -> artist), artist))){
+		  return head;
+    }
+    head = head -> next;
+	}
+	return NULL;
+}
+
+
+struct song_node *rand_song(struct song_node *head){
+	srand(time(NULL));
+	int r = rand() % count_nodes(head);
+	while (r){
+		head = head -> next;
+    r--;
+	}
+	return head;
+}
+
+int count_nodes(struct song_node *a){
+  int i = 0;
+  while (a){
+    i++;
+    a = a -> next;
+  }
+  return i;
+}
+
+struct song_node *remove_song(struct song_node *head, char *artist, char *name){
+	struct song_node *first = head;
+  struct song_node *temp;
+  int tmp = 1;
+  while (head){
+    if (!(song_cmp(head, make_node(artist, name))) && tmp != 1){
+      temp -> next = head -> next;
+      free(head);
+    }
+    if (!(song_cmp(head, make_node(artist, name))) && tmp == 1){
+      temp = head -> next;
+      first = temp;
+      free(head);
+    }
+    temp = head;
+    head = head -> next;
+    tmp++;
+  }
+  return first;
+}
+
+struct song_node *free_list(struct song_node *head){
+	struct song_node *first = head;
+	struct song_node *temp;
+	while (head){
+		temp = head;
+		free(temp);
+		head = head -> next;
+	}
+	return NULL;
 }

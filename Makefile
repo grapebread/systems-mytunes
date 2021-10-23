@@ -14,3 +14,4 @@ clean:
 	-rm *.o
 	-rm *~
 	-rm *.exe
+	-rm mytunes

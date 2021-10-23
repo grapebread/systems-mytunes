@@ -17,6 +17,7 @@ struct song_node *find_song(struct song_node *head, char *artist, char *name);
 struct song_node *find_artist_song(struct song_node *head, char *artist);
 struct song_node *free_list(struct song_node *head);
 int song_cmp(struct song_node *a, struct song_node *b);
+int count_nodes(struct song_node *a);
 void print_node(struct song_node *node);
 void print_list(struct song_node *head);
 
