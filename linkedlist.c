@@ -32,18 +32,22 @@ struct song_node *insert(struct song_node *head, char *artist, char *name)
     }
 
     struct song_node *node = make_node(artist, name);
-    if (!song_cmp(head, node))
+    if (song_cmp(head, node) > 0)
     {
         node->next = head;
-        return head;
+        return node;
     }
 
     struct song_node *tmp = head;
     while (tmp)
     {
-        if (!song_cmp(tmp, node))
+        if (tmp -> next == NULL){
+          tmp -> next = node;
+          break;
+        }
+        if (song_cmp(tmp, node) < 0 && (song_cmp(tmp -> next, node) > 0))
         {
-            node->next = tmp->next->next;
+            node->next = tmp->next;
             tmp->next = node;
             break;
         }
@@ -71,43 +75,25 @@ struct song_node *find_song(struct song_node *head, char *artist, char *name)
 
 int song_cmp(struct song_node *a, struct song_node *b)
 {
-    int artist_cmp = 0;
-    int name_cmp = 0;
-
-    int a_artist_len = strlen(a->artist);
-    int b_artist_len = strlen(b->artist);
-    int a_name_len = strlen(a->name);
-    int b_name_len = strlen(b->name);
-
-    if (a_artist_len != b_artist_len)
-    {
-        int i = 0;
-        while (a->artist[i] == b->artist[i] && a->artist[i] != '\0' && b->artist[i] != '\0')
-            ++i;
-
-        return a->artist[i] - b->artist[i];
-    }
-
-    if (a_name_len != b_name_len)
-    {
-        int i = 0;
-        while (a->name[i] == b->name[i] && a->name[i] != '\0' && b->name[i] != '\0')
-            ++i;
-
-        return a->name[i] - b->name[i]; // stuff
-    }
-
-    return 0;
+    if (strcasecmp(a ->artist, b ->artist) == 0) return strcasecmp(a -> name, b->name);
+    // different artists
+    else return strcasecmp(a->artist, b->artist);
 }
 
 void print_node(struct song_node *node)
 {
-    printf("%s: %s\n", node->artist, node->name);
+    if (node) {
+      printf("%s: %s\n", node->artist, node->name);
+    }
+    if (!node){
+      printf("%s\n", "No Song");
+    }
 }
 
 void print_list(struct song_node *head)
 {
     struct song_node *tmp = head;
+    printf("| ");
     while (tmp)
     {
         printf("%s: %s", tmp->artist, tmp->name);
@@ -131,7 +117,6 @@ struct song_node *find_artist_song(struct song_node *head, char *artist){
 
 
 struct song_node *rand_song(struct song_node *head){
-	srand(time(NULL));
 	int r = rand() % count_nodes(head);
 	while (r){
 		head = head -> next;
