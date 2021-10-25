@@ -76,11 +76,10 @@ struct song_node *find_song(struct song_node *head, char *artist, char *name)
 
 int song_cmp(struct song_node *a, struct song_node *b)
 {
-    if (strcasecmp(a->artist, b->artist) == 0)
+    if (strcasecmp(a->artist, b->artist) == 0){
         return strcasecmp(a->name, b->name);
-    // different artists
-    else
-        return strcasecmp(a->artist, b->artist);
+    }
+    return strcasecmp(a->artist, b->artist);
 }
 
 void print_node(struct song_node *node)
