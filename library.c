@@ -36,6 +36,7 @@ struct song_node **delete_song(struct song_node **head, char *artist, char *name
 
 struct song_node **clear_library(struct song_node **head)
 {
+        int i;
 	for (int i = 0; i < 27; i++)
 	{
 		head[i] = free_list(head[i]);
@@ -77,6 +78,7 @@ void print_artist(struct song_node **head, char *artist)
 
 void print_library(struct song_node **head)
 {
+        int i;
 	for (int i = 0; i < 27; i++)
 	{
 		if (head[i])
@@ -100,6 +102,7 @@ void print_library(struct song_node **head)
 int count_total_nodes(struct song_node **head)
 {
 	int count = 0;
+        int i;
 	for (int i = 0; i <= 26; ++i)
 	{
 		count += count_nodes(head[i]);
