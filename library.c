@@ -36,7 +36,7 @@ struct song_node **delete_song(struct song_node **head, char *artist, char *name
 
 struct song_node **clear_library(struct song_node **head)
 {
-        int i;
+  int i;
 	for (i = 0; i < 27; i++)
 	{
 		head[i] = free_list(head[i]);
@@ -78,7 +78,7 @@ void print_artist(struct song_node **head, char *artist)
 
 void print_library(struct song_node **head)
 {
-        int i;
+  int i;
 	for (i = 0; i < 27; i++)
 	{
 		if (head[i])
@@ -102,7 +102,7 @@ void print_library(struct song_node **head)
 int count_total_nodes(struct song_node **head)
 {
 	int count = 0;
-        int i;
+  int i;
 	for (i = 0; i <= 26; ++i)
 	{
 		count += count_nodes(head[i]);
@@ -123,7 +123,7 @@ int generate_random(struct song_node **head)
 
 void shuffle(struct song_node **head, int n)
 {
-        int i;
+  int i;
 	struct song_node *temp = NULL;
 	int count = count_total_nodes(head);
 	for (i = 0; i < n && i < count; i++)
