@@ -38,10 +38,10 @@ struct song_node **clear_library(struct song_node **head)
 {
 	for (int i = 0; i < 27; i++)
 	{
-		free_list(head[i]);
+		head[i] = free_list(head[i]);
+		head[i] = 0;
 	}
-	free(head);
-	return NULL;
+	return head;
 }
 
 int to_index(char c)
@@ -77,30 +77,23 @@ void print_artist(struct song_node **head, char *artist)
 
 void print_library(struct song_node **head)
 {
-	if (head)
+	for (int i = 0; i < 27; i++)
 	{
-		for (int i = 0; i < 27; i++)
+		if (head[i])
 		{
-			if (head[i])
+			if (i == 26)
 			{
-				if (i == 26)
-				{
-					printf("#: ");
-				}
-				else
-				{
-
-					printf("%c: ", i + 97);
-				}
-
-				print_list(head[i]);
-				printf("\n");
+				printf("#: ");
 			}
+			else
+			{
+
+				printf("%c: ", i + 97);
+			}
+
+			print_list(head[i]);
+			printf("\n");
 		}
-	}
-	else
-	{
-		printf("");
 	}
 }
 

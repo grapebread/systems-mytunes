@@ -179,5 +179,7 @@ int main(void)
     print_library(library);
     printf("\n===================================\n");
 
+    free(library);
+
     return 0;
 }
