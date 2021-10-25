@@ -41,11 +41,12 @@ struct song_node *insert(struct song_node *head, char *artist, char *name)
     struct song_node *tmp = head;
     while (tmp)
     {
-        if (tmp -> next == NULL){
-          tmp -> next = node;
-          break;
+        if (tmp->next == NULL)
+        {
+            tmp->next = node;
+            break;
         }
-        if (song_cmp(tmp, node) < 0 && (song_cmp(tmp -> next, node) > 0))
+        if (song_cmp(tmp, node) < 0 && (song_cmp(tmp->next, node) > 0))
         {
             node->next = tmp->next;
             tmp->next = node;
@@ -75,93 +76,108 @@ struct song_node *find_song(struct song_node *head, char *artist, char *name)
 
 int song_cmp(struct song_node *a, struct song_node *b)
 {
-    if (strcasecmp(a ->artist, b ->artist) == 0) return strcasecmp(a -> name, b->name);
+    if (strcasecmp(a->artist, b->artist) == 0)
+        return strcasecmp(a->name, b->name);
     // different artists
-    else return strcasecmp(a->artist, b->artist);
+    else
+        return strcasecmp(a->artist, b->artist);
 }
 
 void print_node(struct song_node *node)
 {
-    if (node) {
-      printf("%s: %s\n", node->artist, node->name);
+    if (node)
+    {
+        printf("{ %s, %s }", node->artist, node->name);
     }
-    if (!node){
-      printf("%s\n", "No Song");
+    if (!node)
+    {
+        printf("song not found");
     }
 }
 
 void print_list(struct song_node *head)
 {
-    struct song_node *tmp = head;
-    printf("| ");
-    while (tmp)
+    printf("[");
+    while (head)
     {
-        printf("%s: %s", tmp->artist, tmp->name);
-        printf(" |");
         printf(" ");
+        print_node(head);
+        printf(" |");
 
-        tmp = tmp->next;
+        head = head->next;
     }
-    printf("\n");
+    printf(" ]");
 }
 
-struct song_node *find_artist_song(struct song_node *head, char *artist){
-	while (head){
-		if (!(strcasecmp((head -> artist), artist))){
-		  return head;
+struct song_node *find_artist(struct song_node *head, char *artist)
+{
+    while (head)
+    {
+        if (!(strcasecmp((head->artist), artist)))
+        {
+            return head;
+        }
+        head = head->next;
     }
-    head = head -> next;
-	}
-	return NULL;
+    return NULL;
 }
 
-
-struct song_node *rand_song(struct song_node *head){
-	int r = rand() % count_nodes(head);
-	while (r){
-		head = head -> next;
-    r--;
-	}
-	return head;
-}
-
-int count_nodes(struct song_node *a){
-  int i = 0;
-  while (a){
-    i++;
-    a = a -> next;
-  }
-  return i;
-}
-
-struct song_node *remove_song(struct song_node *head, char *artist, char *name){
-	struct song_node *first = head;
-  struct song_node *temp;
-  int tmp = 1;
-  while (head){
-    if (!(song_cmp(head, make_node(artist, name))) && tmp != 1){
-      temp -> next = head -> next;
-      free(head);
+struct song_node *rand_song(struct song_node *head)
+{
+    int r = rand() % count_nodes(head);
+    while (r)
+    {
+        head = head->next;
+        r--;
     }
-    if (!(song_cmp(head, make_node(artist, name))) && tmp == 1){
-      temp = head -> next;
-      first = temp;
-      free(head);
-    }
-    temp = head;
-    head = head -> next;
-    tmp++;
-  }
-  return first;
+    return head;
 }
 
-struct song_node *free_list(struct song_node *head){
-	struct song_node *first = head;
-	struct song_node *temp;
-	while (head){
-		temp = head;
-		free(temp);
-		head = head -> next;
-	}
-	return NULL;
+int count_nodes(struct song_node *a)
+{
+    int i = 0;
+    while (a)
+    {
+        i++;
+        a = a->next;
+    }
+    return i;
+}
+
+struct song_node *remove_song(struct song_node *head, char *artist, char *name)
+{
+    struct song_node *first = head;
+    struct song_node *temp;
+    int tmp = 1;
+    while (head)
+    {
+        if (!(song_cmp(head, make_node(artist, name))) && tmp != 1)
+        {
+            temp->next = head->next;
+            free(head);
+        }
+        if (!(song_cmp(head, make_node(artist, name))) && tmp == 1)
+        {
+            temp = head->next;
+            first = temp;
+            free(head);
+        }
+        temp = head;
+        head = head->next;
+        tmp++;
+    }
+    return first;
+}
+
+struct song_node *free_list(struct song_node *head)
+{
+    struct song_node *first = head;
+    struct song_node *temp;
+    while (head)
+    {
+        temp = head;
+        free(temp);
+        head = head->next;
+    }
+    return NULL;
 }
